@@ -12,7 +12,7 @@ config :logger, level: :warn
 # Configure your database
 config :sampler, Sampler.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
+  username: "damianspain",
   password: "postgres",
   database: "sampler_test",
   hostname: "localhost",
