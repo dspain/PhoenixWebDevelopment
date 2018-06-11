@@ -12,7 +12,7 @@ config :logger, level: :warn
 # Configure your database
 config :vocial, Vocial.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
+  username: "damianspain",
   password: "postgres",
   database: "vocial_test",
   hostname: "localhost",
