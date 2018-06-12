@@ -3,17 +3,11 @@ defmodule VocialWeb.PollController do
 
   def index(conn, _params) do
     polls = Vocial.Votes.list_polls()
-
-    conn
-    |> put_layout(:special)
-    |> render("index.html", polls: polls)
+    render(conn, "index.html", polls: polls)
   end
 
   def new(conn, _params) do
     poll = Vocial.Votes.new_poll()
-
-    conn
-    |> put_layout("special.html")
-    |> render("new.html", poll: poll)
+    render(conn, "new.html", poll: poll)
   end
 end
