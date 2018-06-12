@@ -26,7 +26,7 @@ defmodule Vocial.Votes do
 
   def create_poll(attrs) do
     %Poll{}
-    |> Poll.changest(attrs)
+    |> Poll.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -45,7 +45,7 @@ defmodule Vocial.Votes do
 
   def create_option(attrs) do
     %Option{}
-    |> Option.changest(attrs)
+    |> Option.changeset(attrs)
     |> Repo.insert()
   end
 end
