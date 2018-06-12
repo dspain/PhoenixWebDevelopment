@@ -17,7 +17,7 @@ defmodule Vocial.Votes do
     Repo.transaction(fn ->
       with {:ok, poll} <- create_poll(poll_attrs),
            {:ok, _options} <- create_options(options, poll) do
-        poll
+        poll |> Repo.preload(:options)
       else
         _ -> Repo.rollback("Failed to create poll")
       end
