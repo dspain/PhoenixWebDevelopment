@@ -48,4 +48,8 @@ defmodule Vocial.Votes do
     |> Option.changeset(attrs)
     |> Repo.insert()
   end
+
+  def list_options do
+    Repo.all(Option) |> Repo.preload(:poll)
+  end
 end

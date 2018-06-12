@@ -36,5 +36,24 @@ defmodule Vocial.VotesTest do
       assert poll.title == title
       assert Enum.count(poll.options) == 3
     end
+
+    test "create_poll_with_options/2 does not create the poll or options with bad data" do
+      title = "Bad Poll"
+      options = ["Choice 1", nil, "Choice 3"]
+      {status, _} = Votes.create_poll_with_options(%{title: title}, options)
+      assert status == :error
+      assert !Enum.any?(Votes.list_polls(), fn p -> p.title == "Bad Poll" end)
+    end
+  end
+
+  describe "options" do
+    test "create_option/1 creates an option on a poll" do
+      with {:ok, poll} = Votes.create_poll(%{title: "Sample Poll"}),
+           {:ok, option} =
+             Votes.create_option(%{title: "Sample Choice", votes: 0, poll_id: poll.id}),
+           option <- Repo.preload(option, :poll) do
+        assert Votes.list_options() == [option]
+      end
+    end
   end
 end
