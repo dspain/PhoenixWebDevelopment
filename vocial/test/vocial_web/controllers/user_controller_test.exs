@@ -12,7 +12,8 @@ defmodule VocialWeb.UserControllerTest do
   end
 
   test "POST /users", %{conn: conn} do
-    conn = post(conn, "/users")
-    assert html_response(conn, 200)
+    user_params = %{"username" => "test", "email" => "test@test.com"}
+    conn = post(conn, "/users", %{"user" => user_params})
+    assert redirected_to(conn) =~ "/users/"
   end
 end
