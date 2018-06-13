@@ -3,7 +3,7 @@ defmodule VocialWeb.UserControllerTest do
 
   test "GET /users/new", %{conn: conn} do
     conn = get(conn, "/users/new")
-    assert html_response(conn, 200)
+    assert html_response(conn, 200) =~ "User Signup"
   end
 
   test "GET /users/:id", %{conn: conn} do
