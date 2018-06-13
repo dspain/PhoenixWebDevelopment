@@ -7,8 +7,13 @@ defmodule VocialWeb.UserControllerTest do
   end
 
   test "GET /users/:id", %{conn: conn} do
-    conn = get(conn, "/users/1")
-    assert html_response(conn, 200)
+    with {:ok, user} <-
+           Vocial.Accounts.create_user(%{"username" => "test", "email" => "test@test.com"}) do
+      conn = get(conn, "/users/#{user.id}")
+      assert html_response(conn, 200) =~ user.username
+    else
+      _ -> assert false
+    end
   end
 
   test "POST /users", %{conn: conn} do

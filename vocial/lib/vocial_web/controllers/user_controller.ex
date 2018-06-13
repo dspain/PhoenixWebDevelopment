@@ -16,7 +16,7 @@ defmodule VocialWeb.UserController do
     end
   end
 
-  def show(conn, _params) do
-    conn
+  def show(conn, %{"id" => id}) do
+    with user <- Accounts.get_user(id), do: render(conn, "show.html", user: user)
   end
 end
