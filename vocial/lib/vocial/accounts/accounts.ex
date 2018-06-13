@@ -5,4 +5,12 @@ defmodule Vocial.Accounts do
   alias Vocial.Accounts.User
 
   def list_users, do: Repo.all(User)
+
+  def new_user, do: User.changeset(%User{}, %{})
+
+  def create_user(attrs \\ %{}) do
+    %User{}
+    |> User.changeset(attrs)
+    |> Repo.insert()
+  end
 end
