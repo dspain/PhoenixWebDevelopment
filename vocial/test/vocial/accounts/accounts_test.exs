@@ -4,12 +4,20 @@ defmodule Vocial.AccountsTest do
   alias Vocial.Accounts
 
   describe "users" do
-    @valid_attrs %{username: "test", email: "test@test.com", active: true}
+    @valid_attrs %{
+      username: "test",
+      email: "test@test.com",
+      active: true,
+      password: "test",
+      password_confirmation: "test"
+    }
 
     def user_fixture(attrs \\ %{}) do
       with create_attrs <- Map.merge(@valid_attrs, attrs),
            {:ok, user} <- Accounts.create_user(create_attrs) do
-        user
+        user |> Map.merge(%{password: nil, password_confirmation: nil})
+      else
+        error -> error
       end
     end
 
