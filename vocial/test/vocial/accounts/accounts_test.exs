@@ -43,5 +43,15 @@ defmodule Vocial.AccountsTest do
       assert !Enum.any?(before, fn u -> user == u end)
       assert Enum.any?(updated, fn u -> user == u end)
     end
+
+    test "create_user/1 fails to create the user without a password and password_confirmation" do
+      {:error, changeset} = user_fixture(%{password: nil, password_confirmation: nil})
+      assert !changeset.valid?
+    end
+
+    test "create_user/1 fails to create the user when the password and the password_confirmation don't match" do
+      {:error, changeset} = user_fixture(%{password: "test", password_confirmation: "fail"})
+      assert !changeset.valid?
+    end
   end
 end
