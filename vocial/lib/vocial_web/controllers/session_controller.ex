@@ -1,6 +1,8 @@
 defmodule VocialWeb.SessionController do
   use VocialWeb, :controller
 
+  alias Vocial.Accounts
+
   def new(conn, _params) do
     render(conn, "new.html")
   end
@@ -32,6 +34,6 @@ defmodule VocialWeb.SessionController do
   end
 
   defp login(user, password) do
-    true
+    {:ok, user}
   end
 end
