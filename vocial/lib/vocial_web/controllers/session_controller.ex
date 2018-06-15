@@ -34,6 +34,6 @@ defmodule VocialWeb.SessionController do
   end
 
   defp login(user, password) do
-    {:ok, user}
+    Comeonin.Bcrypt.check_pass(user, password)
   end
 end
