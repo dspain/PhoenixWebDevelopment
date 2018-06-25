@@ -16,7 +16,7 @@ defmodule Vocial.Votes.Poll do
 
   def changeset(%Poll{} = poll, attrs) do
     poll
-    |> cast(attrs, [:title])
-    |> validate_required([:title])
+    |> cast(attrs, [:title, :user_id])
+    |> validate_required([:title, :user_id])
   end
 end
