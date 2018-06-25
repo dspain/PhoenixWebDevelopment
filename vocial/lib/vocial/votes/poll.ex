@@ -3,11 +3,13 @@ defmodule Vocial.Votes.Poll do
   import Ecto.Changeset
   alias Vocial.Votes.Poll
   alias Vocial.Votes.Option
+  alias Vocial.Accounts.User
 
   schema "polls" do
     field(:title, :string)
 
     has_many(:options, Option)
+    belongs_to(:user, User)
 
     timestamps()
   end
