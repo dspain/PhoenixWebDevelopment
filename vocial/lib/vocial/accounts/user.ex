@@ -26,6 +26,7 @@ defmodule Vocial.Accounts.User do
     |> encrypt_password()
     |> validate_required([:username, :email, :active, :encrypted_password])
     |> unique_constraint(:username)
+    |> validate_format(:email, ~r/@/)
   end
 
   def encrypt_password(changeset) do
