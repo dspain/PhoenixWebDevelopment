@@ -28,6 +28,7 @@ defmodule Vocial.Accounts.User do
     |> unique_constraint(:username)
     |> validate_format(:email, ~r/@/)
     |> validate_change(:email, &fake_email_address?/2)
+    |> validate_length(:username, min: 3, max: 100)
   end
 
   def encrypt_password(changeset) do
