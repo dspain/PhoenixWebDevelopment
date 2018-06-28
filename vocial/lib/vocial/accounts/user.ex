@@ -28,6 +28,15 @@ defmodule Vocial.Accounts.User do
     |> unique_constraint(:username)
     |> validate_format(:email, ~r/@/)
     |> validate_change(:email, &fake_email_address?/2)
+    # could also do:
+    #  |> validate_not_fake(:email)
+    #  ...
+    #  def validate_not_fake(changeset, key) do
+    #    case get_change(changeset, key) do
+    #      "test@fake.com" -> add_error(changeset, key, "cannot be a fake email!")
+    #      _ -> changeset
+    #    end
+    #  end
     |> validate_length(:username, min: 3, max: 100)
   end
 
