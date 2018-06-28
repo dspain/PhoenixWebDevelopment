@@ -73,5 +73,10 @@ defmodule Vocial.AccountsTest do
       {:error, user} = user_fixture(%{email: "testtestcom"})
       assert !user.valid?
     end
+
+    test "create_user/1 fails to create the user when the email is a fake email address" do
+      {:error, user} = user_fixture(%{email: "test@fake.com"})
+      assert !user.valid?
+    end
   end
 end
