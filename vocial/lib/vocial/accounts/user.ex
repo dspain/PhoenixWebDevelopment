@@ -27,13 +27,7 @@ defmodule Vocial.Accounts.User do
     |> validate_required([:username, :email, :active, :encrypted_password])
     |> unique_constraint(:username)
     |> validate_format(:email, ~r/@/)
-    |> validate_change(:email, fn :email, value ->
-      if value == "test@fake.com" do
-        [email: "cannot be a fake email!"]
-      else
-        []
-      end
-    end)
+    |> validate_change(:email, &fake_email_address?/2)
   end
 
   def encrypt_password(changeset) do
@@ -43,4 +37,7 @@ defmodule Vocial.Accounts.User do
       _ -> changeset
     end
   end
+
+  def fake_email_address?(:email, "test@fake.com"), do: [email: "cannot be a fake email!"]
+  def fake_email_address?(_, _), do: []
 end
