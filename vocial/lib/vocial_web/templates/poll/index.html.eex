@@ -1,3 +1,4 @@
+<div id="enable-polls-channel" />
 <%= for poll <- @polls do %>
   <h2>Poll: <%= poll.title %></h2>
 

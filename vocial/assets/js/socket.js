@@ -54,9 +54,15 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("polls:lobby", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+// Only connect to the socket if the polls channel actually exists!
+if (document.getElementById('enable-polls-channel')) {
+  // Create a channel to handle joining/sending/receiving
+  let channel = socket.channel("polls:lobby", {})
+
+  //Next, join the topic on the channel!
+  channel.join()
+    .receive("ok", resp => { console.log("Joined successfully", resp) })
+    .receive("error", resp => { console.log("Unable to join", resp) })
+}
 
 export default socket
