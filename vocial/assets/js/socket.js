@@ -63,6 +63,13 @@ if (document.getElementById('enable-polls-channel')) {
   channel.join()
     .receive("ok", resp => { console.log("Joined successfully", resp) })
     .receive("error", resp => { console.log("Unable to join", resp) })
+
+  document.getElementById("polls-ping").addEventListener("click", () => {
+    channel
+      .push("ping")
+      .receive("ok", res => console.log("Received PING response:", res.message))
+      .receive("error", res => console.log("Error sending PING:", res));
+  });
 }
 
 export default socket
