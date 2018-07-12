@@ -70,6 +70,10 @@ if (document.getElementById('enable-polls-channel')) {
       .receive("ok", res => console.log("Received PING response:", res.message))
       .receive("error", res => console.log("Error sending PING:", res));
   });
+
+  channel.on('pong', payload => {
+    console.log("The server has been PONG'd and all is well:", payload)
+  });
 }
 
 export default socket
