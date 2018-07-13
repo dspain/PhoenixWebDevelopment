@@ -28,7 +28,7 @@ defmodule VocialWeb.PollControllerTest do
 
     Enum.each(poll.options, fn option ->
       assert html_response(conn, 200) =~ "#{option.title}"
-      assert html_response(conn, 200) =~ ": #{option.votes} votes"
+      assert html_response(conn, 200) =~ "#{option.votes}"
     end)
   end
 
