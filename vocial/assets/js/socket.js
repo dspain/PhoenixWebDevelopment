@@ -75,9 +75,12 @@ socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
 // Only connect to the socket if the polls channel actually exists!
-if (document.getElementById('enable-polls-channel')) {
+const enableSocket = document.getElementById('enable-polls-channel');
+if (enableSocket) {
+  // Pull the Poll Id to find the right topic from the data attribute
+  const pollId = enableSocket.getAttribute('data-poll-id');
   // Create a channel to handle joining/sending/receiving
-  let channel = socket.channel("polls:lobby", {})
+  let channel = socket.channel("polls:" + pollId, {})
 
   //Next, join the topic on the channel!
   channel.join()
