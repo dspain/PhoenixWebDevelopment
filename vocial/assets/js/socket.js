@@ -6,11 +6,20 @@
 import {Socket} from "phoenix"
 
 // Utility functions
-const onJoin = res => {
+// Push the vote up to the server
+const pushVote = (el, channel) => {
+  channel
+    .push('vote', { option_id: el.getAttribute('data-option-id') })
+    .receive('ok', res => console.log('You Voted!'))
+    .receive('error', res => console.log('Failed to vote:', res));
+};
+
+// When we join the channel, do this
+const onJoin = (res, channel) => {
   document.querySelectorAll('.vote-button-manual').forEach(el => {
     el.addEventListener('click', event => {
       event.preventDefault();
-      console.log('Do something special!');
+      pushVote(el, channel);
     });
   });
   console.log('Joined channel:', res);
@@ -72,8 +81,8 @@ if (document.getElementById('enable-polls-channel')) {
 
   //Next, join the topic on the channel!
   channel.join()
-    .receive("ok", resp => onJoin(resp))
-    .receive("error", resp => { console.log("Unable to join", resp) })
+    .receive("ok", res => onJoin(res, channel))
+    .receive("error", res => { console.log("Unable to join", res) })
 
   document.getElementById("polls-ping").addEventListener("click", () => {
     channel
@@ -84,6 +93,10 @@ if (document.getElementById('enable-polls-channel')) {
 
   channel.on('pong', payload => {
     console.log("The server has been PONG'd and all is well:", payload)
+  });
+
+  channel.on('new_vote', ({ option_id, votes}) => {
+    document.getElementById('vote-count-' + option_id).innerHTML = votes;
   });
 }
 
