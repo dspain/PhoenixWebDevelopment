@@ -32,6 +32,10 @@ defmodule VocialWeb.PollController do
     end
   end
 
+  def show(conn, %{"id" => id}) do
+    with poll <- Votes.get_poll(id), do: render(conn, "show.html", %{poll: poll})
+  end
+
   def vote(conn, %{"id" => id}) do
     with {:ok, option} <- Votes.vote_on_option(id) do
       conn
