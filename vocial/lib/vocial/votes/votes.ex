@@ -59,7 +59,7 @@ defmodule Vocial.Votes do
 
   def vote_on_option(option_id, voter_ip) do
     with option <- Repo.get!(Option, option_id),
-         false <- already_voted?(option_id, voter_ip),
+         false <- already_voted?(option.poll_id, voter_ip),
          votes <- option.votes + 1,
          {:ok, option} <- update_option(option, %{votes: votes}),
          {:ok, _vote_record} <- record_vote(%{poll_id: option.poll_id, ip_address: voter_ip}) do
