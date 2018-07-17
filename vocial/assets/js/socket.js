@@ -79,8 +79,10 @@ const enableSocket = document.getElementById('enable-polls-channel');
 if (enableSocket) {
   // Pull the Poll Id to find the right topic from the data attribute
   const pollId = enableSocket.getAttribute('data-poll-id');
+  // Get the stored remote IP for a user
+  const remoteIp = document.getElementsByName('remote_ip')[0].getAttribute('content');
   // Create a channel to handle joining/sending/receiving
-  let channel = socket.channel("polls:" + pollId, {})
+  let channel = socket.channel("polls:" + pollId, {remote_ip: remoteIp})
 
   //Next, join the topic on the channel!
   channel.join()

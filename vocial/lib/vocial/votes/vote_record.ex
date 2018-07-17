@@ -13,7 +13,7 @@ defmodule Vocial.Votes.VoteRecord do
     timestamps()
   end
 
-  def changeset(%VoteRecords{} = vote_record, attrs) do
+  def changeset(%VoteRecord{} = vote_record, attrs) do
     vote_record
     |> cast(attrs, [:ip_address, :poll_id])
     |> validate_required([:ip_address, :poll_id])

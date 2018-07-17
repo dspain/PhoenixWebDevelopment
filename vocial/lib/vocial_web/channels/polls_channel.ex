@@ -1,8 +1,8 @@
 defmodule VocialWeb.PollsChannel do
   use VocialWeb, :channel
 
-  def join("polls:" <> _poll_id, _payload, socket) do
-    {:ok, socket}
+  def join("polls:" <> _poll_id, %{"remote_ip" => remote_ip}, socket) do
+    {:ok, assign(socket, :remote_ip, remote_ip)}
   end
 
   def handle_in("ping", _payload, socket) do
