@@ -37,7 +37,12 @@ defmodule VocialWeb.PollController do
   end
 
   def vote(conn, %{"id" => id}) do
-    with {:ok, option} <- Votes.vote_on_option(id) do
+    voter_ip =
+      conn.remote_ip
+      |> Tuple.to_list()
+      |> Enum.join(".")
+
+    with {:ok, option} <- Votes.vote_on_option(id, voter_ip) do
       conn
       |> put_flash(:info, "Placed a vote for #{option.title}!")
       |> redirect(to: poll_path(conn, :index))
