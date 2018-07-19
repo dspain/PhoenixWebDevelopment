@@ -12,6 +12,7 @@ defmodule Vocial.Votes.Poll do
     belongs_to(:user, User)
     has_one(:image, Vocial.Votes.Image)
     has_many(:vote_records, Vocial.Votes.VoteRecord)
+    has_many(:messages, Vocial.Votes.Message)
 
     timestamps()
   end
