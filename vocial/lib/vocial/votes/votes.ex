@@ -6,6 +6,7 @@ defmodule Vocial.Votes do
   alias Vocial.Votes.Option
   alias Vocial.Votes.Image
   alias Vocial.Votes.VoteRecord
+  alias Vocial.Votes.Message
 
   def list_polls do
     Repo.all(Poll) |> Repo.preload([:options, :image, :vote_records])
@@ -89,6 +90,17 @@ defmodule Vocial.Votes do
       |> Repo.aggregate(:count, :id)
 
     votes > 0
+  end
+
+  def list_lobby_messages do
+    Repo.all(
+      from(
+        m in Message,
+        where: is_nil(m.poll_id),
+        order_by: [desc: :inserted_at],
+        limit: 100
+      )
+    )
   end
 
   defp upload_file(%{"image" => image, "user_id" => user_id}, poll) do
