@@ -103,6 +103,18 @@ defmodule Vocial.Votes do
     )
   end
 
+  def list_poll_messages(poll_id) do
+    Repo.all(
+      from(
+        m in Message,
+        where: m.poll_id == ^poll_id,
+        order_by: [desc: :inserted_at],
+        limit: 100,
+        preload: [:poll]
+      )
+    )
+  end
+
   defp upload_file(%{"image" => image, "user_id" => user_id}, poll) do
     extension = Path.extname(image.filename)
     filename = "#{user_id}-#{poll.id}-image#{extension}"
