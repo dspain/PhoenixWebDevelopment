@@ -115,6 +115,12 @@ defmodule Vocial.Votes do
     )
   end
 
+  def create_message(attrs) do
+    %Message{}
+    |> Message.changeset(attrs)
+    |> Repo.insert()
+  end
+
   defp upload_file(%{"image" => image, "user_id" => user_id}, poll) do
     extension = Path.extname(image.filename)
     filename = "#{user_id}-#{poll.id}-image#{extension}"
