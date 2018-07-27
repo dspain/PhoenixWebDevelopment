@@ -30,5 +30,12 @@ const connect = (socket) => {
     .receive("error", res => console.log("Failed to join channel:", res));
 };
 
+const pushMessage = (channel, author, message) => {
+  channel
+    .push("new_message", { author, message })
+    .receive("ok", res => console.log("Message sent!"))
+    .receive("error", res => console.log("Failed to send message:", res));
+};
+
 // Finally, export the scoket to be imported in app.js
 export default { connect };
