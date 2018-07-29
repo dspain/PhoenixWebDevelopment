@@ -37,5 +37,19 @@ const pushMessage = (channel, author, message) => {
     .receive("error", res => console.log("Failed to send message:", res));
 };
 
+const onJoin = (res, channel) => {
+  document.querySelectorAll(".chat-send"). forEach(el => {
+    el.addEventListener("click", event => {
+      event.preventDefault();
+      const chatInput = document.querySelector(".chat-input");
+      const message = chatInput.value;
+      const author = document.querySelector(".author-input").value;
+      pushMessage(channel, author, message);
+      chatInput.value = "";
+    });
+  });
+  console.log("Joined channel:", res);
+};
+
 // Finally, export the scoket to be imported in app.js
 export default { connect };
