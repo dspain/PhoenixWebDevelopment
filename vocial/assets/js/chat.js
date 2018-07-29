@@ -28,6 +28,10 @@ const connect = (socket) => {
     .join()
     .receive("ok", res => onJoin(res, channel))
     .receive("error", res => console.log("Failed to join channel:", res));
+
+  channel.on("new_message", ({ author, message }) => {
+    addMessage(author, message);
+  });
 };
 
 const pushMessage = (channel, author, message) => {
