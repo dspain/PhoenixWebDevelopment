@@ -3,10 +3,35 @@ import { Socket } from "phoenix";
 
 // Utility functions
 
+const pushMessage = (channel, author, message) => {
+  channel
+    .push("new_message", { author, message })
+    .receive("ok", res => console.log("Message sent!"))
+    .receive("error", res => console.log("Failed to send message:", res));
+};
+
 // When we join the channel, do this
 const onJoin = (res, channel) => {
+  document.querySelectorAll(".chat-send").forEach(el => {
+    el.addEventListener("click", event => {
+      event.preventDefault();
+      const chatInput = document.querySelector(".chat-input");
+      const message = chatInput.value;
+      const author = document.querySelector(".author-input").value;
+      pushMessage(channel, author, message);
+      chatInput.value = "";
+    });
+  });
   console.log("Joined channel:", res);
-}
+};
+
+// Add a message to the list of chat messages
+const addMessage = (author, message) => {
+  const chatLog = document.querySelector(".chat-messages");
+  chatLog.innerHTML += `<li>
+    <span class="author">&lt;${author}&gt;</span>
+    <span class="message">${message}</span>`;
+};
 
 // Next, create a new Phoenix Socket to reuse
 const socket = new Socket("/socket");
@@ -32,35 +57,6 @@ const connect = (socket) => {
   channel.on("new_message", ({ author, message }) => {
     addMessage(author, message);
   });
-};
-
-const pushMessage = (channel, author, message) => {
-  channel
-    .push("new_message", { author, message })
-    .receive("ok", res => console.log("Message sent!"))
-    .receive("error", res => console.log("Failed to send message:", res));
-};
-
-const onJoin = (res, channel) => {
-  document.querySelectorAll(".chat-send"). forEach(el => {
-    el.addEventListener("click", event => {
-      event.preventDefault();
-      const chatInput = document.querySelector(".chat-input");
-      const message = chatInput.value;
-      const author = document.querySelector(".author-input").value;
-      pushMessage(channel, author, message);
-      chatInput.value = "";
-    });
-  });
-  console.log("Joined channel:", res);
-};
-
-// Add a message to the list of chat messages
-const addMessage = (author, message) => {
-  const chatLog = document.querySelector(".chat-messages");
-  chatLog.innerHTML += `<li>
-    <span class="author">&lt;${author}&gt;</span>
-    <span class="message">${message}</span>`;
 };
 
 // Finally, export the scoket to be imported in app.js
