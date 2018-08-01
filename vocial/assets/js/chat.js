@@ -58,9 +58,9 @@ const onJoin = (res, channel) => {
 // Add a message to the list of chat messages
 const addMessage = (author, message) => {
   const chatLog = document.querySelector(".chat-messages");
-  chatLog.innerHTML += '<li>
+  chatLog.innerHTML += `<li>
     <span class="author">&lt;${author}&gt;</span>
-    <span class="message">${message}</span>';
+    <span class="message">${message}</span>`;
 };
 
 // Finally, export the scoket to be imported in app.js
