@@ -7,8 +7,9 @@
   <div class="row col-md-12">
     <h3>Chat</h3>
     <ul class="list-unstyled chat-messages">
-      <li>&lt;Person&gt; Hello World!</li>
-      <li>&lt;Other Person&gt; Greetings to you all!</li>
+      <%= for message <- @messages do %>
+        <li><span class="author">&lt;<%= message.author %>&gt; <span class="message"><%= message.message %></span>
+      <% end %>
     </ul>
   </div>
   <div class="row">
