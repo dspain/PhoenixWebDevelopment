@@ -9,7 +9,7 @@ defmodule Vocial.Votes do
   alias Vocial.Votes.Message
 
   def list_polls do
-    Repo.all(Poll) |> Repo.preload([:options, :image, :vote_records])
+    Repo.all(Poll) |> Repo.preload([:options, :image, :vote_records, :messages])
   end
 
   def new_poll do
@@ -76,7 +76,8 @@ defmodule Vocial.Votes do
     |> Repo.update()
   end
 
-  def get_poll(id), do: Repo.get!(Poll, id) |> Repo.preload([:options, :image, :vote_records])
+  def get_poll(id),
+    do: Repo.get!(Poll, id) |> Repo.preload([:options, :image, :vote_records, :messages])
 
   def record_vote(%{poll_id: _poll_id, ip_address: _ip_address} = attrs) do
     %VoteRecord{}
