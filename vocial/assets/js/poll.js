@@ -25,7 +25,7 @@ const connect = socket => {
   }
 
   // Pull the Poll Id to find the right topic from the data attribute
-  const pollId = enableSocket.getAttribute('data-poll-id');
+  const pollId = enableLivePolls.getAttribute('data-poll-id');
   // Get the stored remote IP for a user
   const remoteIp = document.getElementsByName('remote_ip')[0].getAttribute('content');
   // Create a channel to handle joining/sending/receiving
