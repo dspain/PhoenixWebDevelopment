@@ -39,6 +39,13 @@ const socket = new Socket("/socket");
 // Connect to the socket itself
 socket.connect();
 
+// Get the chatroom that we're supposed to connect to
+const chatroom = document
+  .getElementById("enable-chat-channel")
+  .getAttribute("data-chatroom");
+// Create a channel to handle joining/sending/receiving
+const channel = socket.channel("chat:" + chatroom);
+
 const connect = (socket) => {
   // Only connect to the socket if the chat channel actually exists!
   const enableLiveChat = document.getElementById("enable-chat-channel");
