@@ -3,7 +3,7 @@ defmodule VocialWeb.ChatChannel do
 
   alias Vocial.Votes
 
-  def join("chat:lobby", _payload, socket) do
+  def join("chat:" <> _poll_id, _payload, socket) do
     {:ok, socket}
   end
 
