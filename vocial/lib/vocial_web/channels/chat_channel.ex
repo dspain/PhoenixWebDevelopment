@@ -8,7 +8,15 @@ defmodule VocialWeb.ChatChannel do
   end
 
   def handle_in("new_message", %{"author" => author, "message" => message}, socket) do
-    with {:ok, _message} <- Votes.create_message(%{author: author, message: message}) do
+    poll_id =
+      case socket.topic do
+        "chat:lobby" -> nil
+        "chat:" <> id -> id
+        _ -> nil
+      end
+
+    with {:ok, _message} <-
+           Votes.create_message(%{author: author, message: message, poll_id: poll_id}) do
       broadcast(socket, "new_message", %{author: author, message: message})
       {:reply, {:ok, %{author: author, message: message}}, socket}
     else
