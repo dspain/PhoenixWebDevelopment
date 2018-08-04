@@ -22,6 +22,17 @@ defmodule VocialWeb.ChatChannelTest do
     {:ok, _, poll_socket} = subscribe_and_join(socket, ChatChannel, "chat:#{poll.id}", %{})
     {:ok, _, lobby_socket} = subscribe_and_join(socket, ChatChannel, "chat:lobby", %{})
 
-    {:ok, poll_socket: poll_scoket, lobby_socket: lobby_socket, user: user, poll: poll}
+    {:ok, poll_socket: poll_socket, lobby_socket: lobby_socket, user: user, poll: poll}
+  end
+
+  test "new_message replies with status ok for chat:poll_id}", %{poll_socket: socket} do
+    ref = push(socket, "new_message", %{"author" => "test", "message" => "Hello World"})
+    assert_reply(ref, :ok, %{author: author, message: message})
+    assert author == "test"
+    assert message == "Hello World"
+
+    assert_broadcast("new_message", %{author: author, message: message})
+    assert author == "test"
+    assert message == "Hello World"
   end
 end
