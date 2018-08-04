@@ -35,4 +35,15 @@ defmodule VocialWeb.ChatChannelTest do
     assert author == "test"
     assert message == "Hello World"
   end
+
+  test "new_message replies with status ok for chat:lobby", %{lobby_socket: socket} do
+    ref = push(socket, "new_message", %{"author" => "test", "message" => "Hello World"})
+    assert_reply(ref, :ok, %{author: author, message: message})
+    assert author == "test"
+    assert message == "Hello World"
+
+    assert_broadcast("new_message", %{author: author, message: message})
+    assert author == "test"
+    assert message == "Hello World"
+  end
 end
