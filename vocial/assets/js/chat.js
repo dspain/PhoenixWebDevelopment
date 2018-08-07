@@ -1,5 +1,6 @@
 // Import Phoenix's Socket Library
-import { Socket } from "phoenix";
+import { Socket, Presence } from "phoenix";
+import $ from "jquery";
 
 // Utility functions
 
