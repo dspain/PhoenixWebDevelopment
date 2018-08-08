@@ -13,16 +13,13 @@ const pushMessage = (channel, author, message) => {
 
 // When we join the channel, do this
 const onJoin = (res, channel) => {
-  document.querySelectorAll(".chat-send").forEach(el => {
-    el.addEventListener("click", event => {
+  $(".chat-send").on("click", event => {
       event.preventDefault();
-      const chatInput = document.querySelector(".chat-input");
-      const message = chatInput.value;
-      const author = document.querySelector(".author-input").value;
+      const message = $(".chat-input").val();
+      const author = $(".author-input").val();
       pushMessage(channel, author, message);
-      chatInput.value = "";
+      $(".chat-input").val("");
     });
-  });
   console.log("Joined channel:", res);
 };
 
