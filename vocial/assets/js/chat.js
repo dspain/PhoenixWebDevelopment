@@ -25,10 +25,12 @@ const onJoin = (res, channel) => {
 
 // Add a message to the list of chat messages
 const addMessage = (author, message) => {
-  const chatLog = document.querySelector(".chat-messages");
-  chatLog.innerHTML += `<li>
-    <span class="author">&lt;${author}&gt;</span>
-    <span class="message">${message}</span>`;
+  const chatLog = $(".chat-messages").append(
+     `<li>
+        <span class="author">&lt;${author}&gt;</span>
+        <span class="message">${message}</span>
+      </li>`
+    );
 };
 
 // Next, create a new Phoenix Socket to reuse
