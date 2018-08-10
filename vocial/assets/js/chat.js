@@ -33,12 +33,21 @@ const addMessage = (author, message) => {
     );
 };
 
+// Presence functions
+
+// Presence default state
+let presences = {};
+
+// The timer we'll use to check the user's idle status
+let idleTimeout = null;
+
+// How long we'll wait for the user to be marked as idle
+const TIMEOUT = 30 * 1000; // 30 seconds
 // Next, create a new Phoenix Socket to reuse
 const socket = new Socket("/socket");
 
 // Connect to the socket itself
 socket.connect();
-
 
 const connect = (socket) => {
   // Only connect to the socket if the chat channel actually exists!
