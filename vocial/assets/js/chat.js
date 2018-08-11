@@ -43,6 +43,17 @@ let idleTimeout = null;
 
 // How long we'll wait for the user to be marked as idle
 const TIMEOUT = 30 * 1000; // 30 seconds
+
+// Provide a way to hide the current chat UI
+const hideChatUI = () => {
+  $("div.chat-ui").addClass("hidden");
+};
+
+// And a way to show the chat UI
+const showChatUI = () => {
+  $("div.chat-ui").removeClass("hidden");
+};
+
 // Next, create a new Phoenix Socket to reuse
 const socket = new Socket("/socket");
 
