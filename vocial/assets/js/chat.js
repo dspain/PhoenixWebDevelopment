@@ -54,6 +54,21 @@ const showChatUI = () => {
   $("div.chat-ui").removeClass("hidden");
 };
 
+// Load the chat, display the UI, connect to the socket
+const loadChat = socket => {
+  // Set a handler that when the join-chat button is clicked,
+  // we verify that the username is not empty, and then show
+  // the UI and connect to the socket
+  $(".join-chat").on("click", () => {
+    const username = $(".author-input").val();
+    if (username.length <= 0) {
+      return;
+    }
+    showChatUI();
+    connect(socket, username);
+  });
+};
+
 // Next, create a new Phoenix Socket to reuse
 const socket = new Socket("/socket");
 
