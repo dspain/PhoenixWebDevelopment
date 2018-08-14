@@ -69,6 +69,9 @@ const loadChat = socket => {
   });
 };
 
+// Given a metas array for a user, return their current status
+const getStatus = metas => metas.length > 0 && metas[0]["status"];
+
 // Next, create a new Phoenix Socket to reuse
 const socket = new Socket("/socket");
 
