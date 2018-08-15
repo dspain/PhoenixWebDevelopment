@@ -72,6 +72,15 @@ const loadChat = socket => {
 // Given a metas array for a user, return their current status
 const getStatus = metas => metas.length > 0 && metas[0]["status"];
 
+// Sync up the list of users to the current Presence State
+const syncUserList = presences => {
+  $(".username-list").empty();
+  Presence.list(presences, (username, { metas }) => {
+    const status = getStatus(metas);
+    $(".username-list").append(`<li class="${status}">${username}</li>`);
+  });
+};
+
 // Next, create a new Phoenix Socket to reuse
 const socket = new Socket("/socket");
 
