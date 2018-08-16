@@ -81,6 +81,17 @@ const syncUserList = presences => {
   });
 };
 
+// Reset the timer when an interaction occurs
+const resetTimer = (channel, username, skipPush = false) => {
+  if (!skipPush) {
+    channel.push("user_active", { username });
+  }
+  clearTimeout(idleTimeout);
+  idleTimeout = setTimeout(() => {
+    channel.push("user_idle", { username });
+  }, TIMEOUT);
+};
+
 // Next, create a new Phoenix Socket to reuse
 const socket = new Socket("/socket");
 
