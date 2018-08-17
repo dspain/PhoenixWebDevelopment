@@ -92,6 +92,13 @@ const resetTimer = (channel, username, skipPush = false) => {
   }, TIMEOUT);
 };
 
+// Add a new status message to the chat display
+const addStatusMessage = (username, status) => {
+  $(".chat-messages").append(
+    `<li class="status">${username} is ${status}...</li>`
+  );
+};
+
 // Next, create a new Phoenix Socket to reuse
 const socket = new Socket("/socket");
 
