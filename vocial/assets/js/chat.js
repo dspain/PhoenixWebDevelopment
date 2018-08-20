@@ -99,6 +99,34 @@ const addStatusMessage = (username, status) => {
   );
 };
 
+// When Phoenix reports a change in Presence status, determine the differences
+// and report the changes to the user
+const handlePresenceDiff = diff => {
+  // Separate out the response from the server into joins and leaves
+  const { joins, leaves } = diff;
+  if (!joins && !leaves) {
+    // Throw out the diff if we're missing both joins and leaves!
+    return;
+  }
+  // Next, based on the diff, get the new state of the presences variable
+  presences = Presence.syncDiff(presences, diff);
+  // Sync up the user list to the new state
+  syncUserList(presences);
+  // For all new statuses, add status messages to the chat log.
+  Object.keys(joins).forEach(username => {
+    const metas = joins[username]["metas"];
+    const status = getStatus(metas);
+    addStatusMessage(username, status);
+  });
+  // Finally, display messages for each person that leaves the chat too!
+  Object.keys(leaves).forEach(username => {
+    if (Object.keys(joins).indexOf(username) !== -1) {
+      return;
+    }
+    addStatusMessage(username, "gone");
+  });
+};
+
 // Next, create a new Phoenix Socket to reuse
 const socket = new Socket("/socket");
 
