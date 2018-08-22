@@ -127,6 +127,12 @@ const handlePresenceDiff = diff => {
   });
 };
 
+// When Phoenix reports the initial state of Presence status, sync up the list of users
+const handlePresenceState = state => {
+  presences = Presence.syncState(presences, state);
+  syncUserList(presences);
+};
+
 // Next, create a new Phoenix Socket to reuse
 const socket = new Socket("/socket");
 
