@@ -4,7 +4,9 @@ import $ from "jquery";
 
 // Utility functions
 
+// Push a new message to the server
 const pushMessage = (channel, author, message) => {
+  resetTimer(channel, author);
   channel
     .push("new_message", { author, message })
     .receive("ok", res => console.log("Message sent!"))
