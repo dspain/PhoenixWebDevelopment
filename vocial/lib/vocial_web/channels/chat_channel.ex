@@ -55,7 +55,7 @@ defmodule VocialWeb.ChatChannel do
     {:noreply, socket}
   end
 
-  def handle_info({:after_join, socket}) do
+  def handle_info(:after_join, socket) do
     push(socket, "presence_state", Presence.list(socket))
 
     {:ok, _} =
