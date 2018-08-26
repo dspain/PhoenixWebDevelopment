@@ -39,7 +39,7 @@ defmodule VocialWeb.ChatChannel do
   end
 
   def handle_in("user_active", %{"username" => username}, socket) do
-    presence - Presence.list(socket)
+    presence = Presence.list(socket)
     [meta | _] = presence[username].metas
 
     if meta.status == "idle" do
