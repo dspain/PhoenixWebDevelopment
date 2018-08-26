@@ -171,4 +171,4 @@ const connect = (socket, username) => {
 };
 
 // Finally, export the scoket to be imported in app.js
-export default { connect };
+export default { loadChat };
