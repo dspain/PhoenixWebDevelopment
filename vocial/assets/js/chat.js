@@ -141,7 +141,7 @@ const socket = new Socket("/socket");
 // Connect to the socket itself
 socket.connect();
 
-const connect = (socket) => {
+const connect = (socket, username) => {
   // Only connect to the socket if the chat channel actually exists!
   const enableLiveChat = document.getElementById("enable-chat-channel");
   if (!enableLiveChat) {
@@ -153,7 +153,7 @@ const connect = (socket) => {
     .getElementById("enable-chat-channel")
     .getAttribute("data-chatroom");
   // Create a channel to handle joining/sending/receiving
-  const channel = socket.channel("chat:" + chatroom);
+  const channel = socket.channel("chat:" + chatroom, { username });
 
   // Next, join the topic on the channel!
   channel
@@ -164,6 +164,10 @@ const connect = (socket) => {
   channel.on("new_message", ({ author, message }) => {
     addMessage(author, message);
   });
+  channel.on("presence_state", handlePresenceState);
+  channel.on("presence_diff", handlePresenceDiff);
+
+  resetTimer(channel, username, true);
 };
 
 // Finally, export the scoket to be imported in app.js
