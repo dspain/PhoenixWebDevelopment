@@ -27,4 +27,9 @@ defmodule Vocial.ChatCache do
   def lookup do
     GenServer.call(__MODULE__, {:lookup})
   end
+
+  def handle_cast({:write, row}, %{table: table} = state) do
+    :ets.insert(table, {@key, row})
+    {:noreply, state}
+  end
 end
