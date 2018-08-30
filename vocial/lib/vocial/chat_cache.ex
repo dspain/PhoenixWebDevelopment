@@ -32,4 +32,15 @@ defmodule Vocial.ChatCache do
     :ets.insert(table, {@key, row})
     {:noreply, state}
   end
+
+  def handle_cal({:lookup}, _, %{table: table} = state) do
+    case :ets.lookup(table, @key) do
+      [] ->
+        {:reply, [], state}
+
+      data ->
+        results = Enum.map(data, fn {_k, v} -> v end)
+        {:reply, results, state}
+    end
+  end
 end
