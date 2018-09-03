@@ -3,6 +3,7 @@ defmodule VocialWeb.ChatChannel do
 
   alias Vocial.Votes
   alias VocialWeb.Presence
+  alias Vocial.ChatCache
 
   def join("chat:" <> _poll_id, payload, socket) do
     socket = assign(socket, :username, payload["username"])
@@ -51,6 +52,18 @@ defmodule VocialWeb.ChatChannel do
           status: "active"
         })
     end
+
+    {:noreply, socket}
+  end
+
+  def handle_in("user_idle", %{"username" => username}, socket) do
+    ChatCache.write(socket.topic, username, "idle")
+    push(socket, "presence_diff", Presence.list(socket))
+
+    {:ok, _} =
+      Presence.update(socket, username, %{
+        status: "idle"
+      })
 
     {:noreply, socket}
   end

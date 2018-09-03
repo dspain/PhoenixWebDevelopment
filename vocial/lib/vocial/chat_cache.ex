@@ -33,7 +33,7 @@ defmodule Vocial.ChatCache do
     {:noreply, state}
   end
 
-  def handle_cal({:lookup}, _, %{table: table} = state) do
+  def handle_call({:lookup}, _, %{table: table} = state) do
     case :ets.lookup(table, @key) do
       [] ->
         {:reply, [], state}
