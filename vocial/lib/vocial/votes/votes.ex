@@ -12,6 +12,17 @@ defmodule Vocial.Votes do
     Repo.all(Poll) |> Repo.preload([:options, :image, :vote_records, :messages])
   end
 
+  def list_most_recent_polls(page \\ 0, per_page \\ 25) do
+    Repo.all(
+      from(p in Poll,
+        limit: ^per_page,
+        offset: ^(page * per_page),
+        order_by: [desc: p.inserted_at]
+      )
+    )
+    |> Repo.preload([:options, :image, :vote_records, :messages])
+  end
+
   def new_poll do
     Poll.changeset(%Poll{}, %{})
   end
