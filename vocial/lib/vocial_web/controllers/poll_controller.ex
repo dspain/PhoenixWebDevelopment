@@ -82,4 +82,13 @@ defmodule VocialWeb.PollController do
     |> Map.merge(params)
     |> paging_params()
   end
+
+  defp paging_options(polls, page, per_page) do
+    %{
+      include_next_page: Enum.count(polls) > per_page,
+      include_prev_page: page > 0,
+      page: page,
+      per_page: per_page
+    }
+  end
 end
