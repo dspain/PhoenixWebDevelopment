@@ -6,11 +6,10 @@ defmodule VocialWeb.PollController do
   plug(VocialWeb.VerifyUserSession when action in [:new, :create])
 
   def index(conn, params) do
-    %{"page" => page, "per_page" => per_page} =
-      Map.merge(%{"page" => 0, "per_page" => 25}, params)
-
+    %{"page" => page, "per_page" => per_page} = normalize_paging_params(params)
     polls = Votes.list_most_recent_polls(page, per_page)
-    render(conn, "index.html", polls: polls)
+    opts = paging_options(polls, page, per_page)
+    render(conn, "index.html", polls: Enum.take(polls, per_page), opts: opts)
   end
 
   def new(conn, _params) do
