@@ -60,4 +60,26 @@ defmodule VocialWeb.PollController do
         |> redirect(to: poll_path(conn, :index))
     end
   end
+
+  defp paging_params(%{"page" => page, "per_page" => per_page}) do
+    page =
+      case is_binary(page) do
+        true -> String.to_integer(page)
+        _ -> page
+      end
+
+    per_page =
+      case is_binary(per_page) do
+        true -> String.to_integer(per_page)
+        _ -> per_page
+      end
+
+    %{"page" => page - 1, "per_page" => per_page}
+  end
+
+  defp normalize_paging_params(params) do
+    %{"page" => 1, "per_page" => 25}
+    |> Map.merge(params)
+    |> paging_params()
+  end
 end
