@@ -5,8 +5,11 @@ defmodule VocialWeb.PollController do
 
   plug(VocialWeb.VerifyUserSession when action in [:new, :create])
 
-  def index(conn, _params) do
-    polls = Votes.list_polls()
+  def index(conn, params) do
+    %{"page" => page, "per_page" => per_page} =
+      Map.merge(%{"page" => 0, "per_page" => 25}, params)
+
+    polls = Votes.list_most_recent_polls(page, per_page)
     render(conn, "index.html", polls: polls)
   end
 
