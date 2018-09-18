@@ -30,6 +30,10 @@ defmodule VocialWeb.Router do
     get("/logout", SessionController, :delete)
   end
 
+  scope "/auth", VocialWeb do
+    get("/:provider/callback", SessionController, :callback)
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", VocialWeb do
   #   pipe_through :api
