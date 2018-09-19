@@ -13,3 +13,5 @@
     <%= submit "Login" %>
   <% end %>
 </div>
+<hr />
+<%= link "Login with Twitter", to: "/auth/twitter" %>
