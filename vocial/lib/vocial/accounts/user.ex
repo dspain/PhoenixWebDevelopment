@@ -14,6 +14,9 @@ defmodule Vocial.Accounts.User do
     field(:password, :string, virtual: true)
     field(:password_confirmation, :string, virtual: true)
 
+    field(:oauth_provider, :string)
+    field(:oauth_id, :string)
+
     has_many(:polls, Poll)
     has_many(:images, Vocial.Votes.Image)
 
@@ -22,10 +25,18 @@ defmodule Vocial.Accounts.User do
 
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:username, :email, :active, :password, :password_confirmation])
+    |> cast(attrs, [
+      :username,
+      :email,
+      :active,
+      :password,
+      :password_confirmation,
+      :oauth_provider,
+      :oauth_id
+    ])
     |> validate_confirmation(:password, message: "does not match password!")
     |> encrypt_password()
-    |> validate_required([:username, :email, :active, :encrypted_password])
+    |> validate_required([:username, :active, :encrypted_password])
     |> unique_constraint(:username)
     |> validate_format(:email, ~r/@/)
     |> validate_change(:email, &fake_email_address?/2)
