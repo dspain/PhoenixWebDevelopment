@@ -31,6 +31,9 @@ defmodule VocialWeb.Router do
   end
 
   scope "/auth", VocialWeb do
+    pipe_through(:browser)
+
+    get("/:provider", SessionController, :request)
     get("/:provider/callback", SessionController, :callback)
   end
 
