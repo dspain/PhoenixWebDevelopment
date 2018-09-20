@@ -24,12 +24,17 @@ config :logger, :console,
 # Configure ueberauth
 config :ueberauth, Ueberauth,
   providers: [
-    twitter: {Ueberauth.Strategy.Twitter, []}
+    twitter: {Ueberauth.Strategy.Twitter, []},
+    google: {Ueberauth.Strategy.Google, []}
   ]
 
 config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
   consumer_key: System.get_env("TWITTER_CONSUMER_KEY"),
   consumer_secret: System.get_env("TWITTER_CONSUMER_SECRET")
+
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  consumer_key: System.get_env("GOOGLE_CONSUMER_KEY"),
+  consumer_secret: System.get_env("GOOGLE_CONSUMER_SECRET")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
