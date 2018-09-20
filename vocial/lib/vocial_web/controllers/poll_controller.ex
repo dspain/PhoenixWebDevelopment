@@ -86,7 +86,7 @@ defmodule VocialWeb.PollController do
     %{
       include_next_page: Enum.count(polls) > per_page,
       include_prev_page: page > 0,
-      page: page,
+      page: page + 1,
       per_page: per_page
     }
   end
