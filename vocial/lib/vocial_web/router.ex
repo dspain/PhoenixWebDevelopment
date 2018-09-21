@@ -38,7 +38,9 @@ defmodule VocialWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", VocialWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", VocialWeb do
+    pipe_through(:api)
+
+    resources("/polls", Api.PollController, only: [:index])
+  end
 end
