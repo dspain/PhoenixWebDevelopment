@@ -17,6 +17,8 @@ defmodule Vocial.Accounts.User do
     field(:oauth_provider, :string)
     field(:oauth_id, :string)
 
+    field(:api_key, :string)
+
     has_many(:polls, Poll)
     has_many(:images, Vocial.Votes.Image)
 
@@ -32,7 +34,8 @@ defmodule Vocial.Accounts.User do
       :password,
       :password_confirmation,
       :oauth_provider,
-      :oauth_id
+      :oauth_id,
+      :api_key
     ])
     |> validate_confirmation(:password, message: "does not match password!")
     |> encrypt_password()
