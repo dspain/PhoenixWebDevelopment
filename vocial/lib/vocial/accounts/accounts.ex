@@ -19,4 +19,10 @@ defmodule Vocial.Accounts do
   def get_user_by_username(username) do
     Repo.get_by(User, username: username)
   end
+
+  def generate_api_key(user) do
+    user
+    |> User.changeset(%{api_key: "ABCDEF"})
+    |> Repo.update()
+  end
 end
