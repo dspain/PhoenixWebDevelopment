@@ -11,6 +11,7 @@ defmodule VocialWeb.Router do
 
   pipeline :api do
     plug(:accepts, ["json"])
+    plug(VocialWeb.VerifyApiKey)
   end
 
   scope "/", VocialWeb do
