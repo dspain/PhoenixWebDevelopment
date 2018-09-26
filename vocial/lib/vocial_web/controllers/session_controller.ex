@@ -75,7 +75,7 @@ defmodule VocialWeb.SessionController do
   end
 
   defp build_user_from_auth(%{provider: :twitter} = auth) do
-    password = random_string(64)
+    password = Accounts.random_string(64)
 
     %{
       username: auth.info.nickname,
@@ -87,7 +87,7 @@ defmodule VocialWeb.SessionController do
   end
 
   defp build_user_from_auth(%{provider: :google} = auth) do
-    password = random_string(64)
+    password = Accounts.random_string(64)
 
     %{
       username: auth.info.email,
@@ -97,9 +97,5 @@ defmodule VocialWeb.SessionController do
       password: password,
       password_confirmation: password
     }
-  end
-
-  defp random_string(length) do
-    :crypto.strong_rand_bytes(length) |> Base.url_encode64() |> binary_part(0, length)
   end
 end
