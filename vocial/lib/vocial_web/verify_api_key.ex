@@ -7,10 +7,8 @@ defmodule VocialWeb.VerifyApiKey do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    conn
-    |> put_status(401)
-    |> render(VocialWeb.ErrorView, "invalid_api_key.json")
-    |> halt()
+    is_valid_api_key?(conn)
+    |> handle_conn(conn)
   end
 
   def fetch_authorization_header(conn) do
@@ -27,4 +25,24 @@ defmodule VocialWeb.VerifyApiKey do
       _ -> {:error, "Invalid Authorization Header Format"}
     end
   end
+
+  def invalid_api_key(conn) do
+    conn
+    |> put_status(401)
+    |> render(VocialWeb.ErrorView, "invalid_api_key.json")
+    |> halt()
+  end
+
+  def is_valid_api_key?(conn) do
+    with {:ok, header} <- fetch_authorization_header(header),
+         {:ok, decoded_header} <- decode_authorization_header(header),
+         [username, api_key] = String.split(decoded_header, ":") do
+      Accounts.verify_api_key(username, api_key)
+    else
+      _ -> false
+    end
+  end
+
+  def handle_conn(true, conn), do: conn
+  def handle_conn(_, conn), do: invalid_api_key(conn)
 end
