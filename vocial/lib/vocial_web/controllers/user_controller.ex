@@ -24,4 +24,10 @@ defmodule VocialWeb.UserController do
   def show(conn, %{"id" => id}) do
     with user <- Accounts.get_user(id), do: render(conn, "show.html", user: user)
   end
+
+  def generate_api_key(conn, %{"id" => id}) do
+    conn
+    |> put_flash(:error, "Not implemented yet")
+    |> redirect(to: "/")
+  end
 end

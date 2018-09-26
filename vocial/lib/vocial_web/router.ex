@@ -28,6 +28,8 @@ defmodule VocialWeb.Router do
     resources("/sessions", SessionController, only: [:create])
     get("/login", SessionController, :new)
     get("/logout", SessionController, :delete)
+
+    post("/users/:id/generate_api_key", UserController, :generate_api_key)
   end
 
   scope "/auth", VocialWeb do
