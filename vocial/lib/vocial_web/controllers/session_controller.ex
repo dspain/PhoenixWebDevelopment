@@ -102,8 +102,4 @@ defmodule VocialWeb.SessionController do
   defp random_string(length) do
     :crypto.strong_rand_bytes(length) |> Base.url_encode64() |> binary_part(0, length)
   end
-
-  defp get_user_by_oauth(oauth_provider, oauth_id) do
-    Repo.get_by(User, oauth_provider: oauth_provider, oauth_id: oauth_id)
-  end
 end
