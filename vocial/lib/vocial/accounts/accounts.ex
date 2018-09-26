@@ -26,7 +26,7 @@ defmodule Vocial.Accounts do
 
   def generate_api_key(user) do
     user
-    |> User.changeset(%{api_key: "ABCDEF"})
+    |> User.changeset(%{api_key: random_string(32)})
     |> Repo.update()
   end
 
