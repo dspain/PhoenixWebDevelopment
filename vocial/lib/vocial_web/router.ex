@@ -44,6 +44,6 @@ defmodule VocialWeb.Router do
   scope "/api", VocialWeb do
     pipe_through(:api)
 
-    resources("/polls", Api.PollController, only: [:index])
+    resources("/polls", Api.PollController, only: [:index, :show])
   end
 end

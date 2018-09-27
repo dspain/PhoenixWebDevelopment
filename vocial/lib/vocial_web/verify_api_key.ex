@@ -34,7 +34,7 @@ defmodule VocialWeb.VerifyApiKey do
   end
 
   def is_valid_api_key?(conn) do
-    with {:ok, header} <- fetch_authorization_header(header),
+    with {:ok, header} <- fetch_authorization_header(conn),
          {:ok, decoded_header} <- decode_authorization_header(header),
          [username, api_key] = String.split(decoded_header, ":") do
       Accounts.verify_api_key(username, api_key)
