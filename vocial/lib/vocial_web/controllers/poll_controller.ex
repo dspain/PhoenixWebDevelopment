@@ -39,7 +39,8 @@ defmodule VocialWeb.PollController do
   end
 
   def show(conn, %{"id" => id}) do
-    with poll <- Votes.get_poll(id), do: render(conn, "show.html", %{poll: poll})
+    poll = Votes.get_poll(id)
+    render(conn, "show.json", poll: poll)
   end
 
   def vote(conn, %{"id" => id}) do

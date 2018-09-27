@@ -2,15 +2,15 @@ defmodule VocialWeb.Api.PollView do
   use VocialWeb, :view
 
   def render("index.json", %{polls: polls}) do
-    %{
-      polls: render_many(polls)
-    }
+    %{polls: render_many(polls)}
   end
 
   def render("index.json", _data) do
-    %{
-      message: "Hello World"
-    }
+    %{message: "Hello World"}
+  end
+
+  def render("show.json", %{poll: poll}) do
+    %{poll: render_one(poll)}
   end
 
   def render_one(poll) do
