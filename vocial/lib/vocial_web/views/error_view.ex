@@ -15,6 +15,14 @@ defmodule VocialWeb.ErrorView do
   end
 
   def render("invalid_api_key.json", _assigns) do
-    %{mesage: "Invalid API Key"}
+    %{message: "Invalid API Key"}
+  end
+
+  def render("404.json", _assigns) do
+    %{message: "Resource not found"}
+  end
+
+  def render("500.json", _assigns) do
+    %{message: "An unhandled exception has occurred"}
   end
 end

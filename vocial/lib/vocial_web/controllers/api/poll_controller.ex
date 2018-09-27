@@ -2,6 +2,7 @@ defmodule VocialWeb.Api.PollController do
   use VocialWeb, :controller
 
   alias Vocial.Votes
+  action_fallback(VocialWeb.Api.ErrorController)
 
   def index(conn, _params) do
     polls = Votes.list_most_recent_polls()
@@ -9,7 +10,9 @@ defmodule VocialWeb.Api.PollController do
   end
 
   def show(conn, %{"id" => id}) do
-    poll = Votes.get_poll(id)
-    render(conn, "show.json", poll: poll)
+    case Votes.get_poll(id) do
+      nil -> {:error, :not_found}
+      poll -> render(conn, "show.json", poll: poll)
+    end
   end
 end

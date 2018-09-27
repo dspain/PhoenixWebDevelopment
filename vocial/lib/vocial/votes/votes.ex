@@ -99,7 +99,7 @@ defmodule Vocial.Votes do
   end
 
   def get_poll(id),
-    do: Repo.get!(Poll, id) |> Repo.preload([:options, :image, :vote_records, :messages])
+    do: Repo.get(Poll, id) |> Repo.preload([:options, :image, :vote_records, :messages])
 
   def record_vote(%{poll_id: _poll_id, ip_address: _ip_address} = attrs) do
     %VoteRecord{}
